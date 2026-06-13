@@ -1,12 +1,14 @@
-from app.ingestion.text_loader import load_text
 from app.embeddings.embedding_service import generate_embedding
+from app.vectordb.chroma_manager import search_documents
 
-text = load_text(
-    "data/raw/customer_feedback.txt"
+query = "Why are users leaving onboarding?"
+
+query_embedding = generate_embedding(
+    query
 )
 
-embedding = generate_embedding(text)
-
-print(
-    f"Embedding dimension: {len(embedding)}"
+results = search_documents(
+    query_embedding
 )
+
+print(results["documents"])
