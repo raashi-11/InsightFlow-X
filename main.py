@@ -1,24 +1,15 @@
-from app.retrieval.retriever import (
-    retrieve_context
+from app.ingestion.text_loader import load_text
+
+from app.agents.research_agent import (
+    analyze_feedback
 )
 
-from app.llm.gemini_service import (
-    ask_with_context
+text = load_text(
+    "data/raw/customer_feedback.txt"
 )
 
-query = "Why are users abandoning onboarding?"
-
-context = retrieve_context(
-    query
+analysis = analyze_feedback(
+    text
 )
 
-answer = ask_with_context(
-    query,
-    context
-)
-
-print("\nCONTEXT:\n")
-print(context)
-
-print("\nANSWER:\n")
-print(answer)
+print(analysis)
