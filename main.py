@@ -4,6 +4,10 @@ from app.agents.trend_agent import (
     analyze_trends
 )
 
+from app.agents.decision_agent import (
+    generate_recommendations
+)
+
 previous = load_text(
     "data/raw/january_feedback.txt"
 )
@@ -17,4 +21,12 @@ analysis = analyze_trends(
     current
 )
 
+recommendations = generate_recommendations(
+    analysis
+)
+
+print("\nANALYSIS\n")
 print(analysis)
+
+print("\nRECOMMENDATIONS\n")
+print(recommendations)
