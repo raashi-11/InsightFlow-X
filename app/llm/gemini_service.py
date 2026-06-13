@@ -16,3 +16,26 @@ model = genai.GenerativeModel(
 def ask_gemini(prompt: str):
     response = model.generate_content(prompt)
     return response.text
+
+def ask_with_context(
+    query,
+    context
+):
+
+    prompt = f"""
+You are an organizational intelligence analyst.
+
+Answer ONLY using the provided context.
+
+Context:
+{context}
+
+Question:
+{query}
+"""
+
+    response = model.generate_content(
+        prompt
+    )
+
+    return response.text

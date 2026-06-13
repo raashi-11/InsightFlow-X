@@ -1,14 +1,24 @@
-from app.embeddings.embedding_service import generate_embedding
-from app.vectordb.chroma_manager import search_documents
+from app.retrieval.retriever import (
+    retrieve_context
+)
 
-query = "Why are users leaving onboarding?"
+from app.llm.gemini_service import (
+    ask_with_context
+)
 
-query_embedding = generate_embedding(
+query = "Why are users abandoning onboarding?"
+
+context = retrieve_context(
     query
 )
 
-results = search_documents(
-    query_embedding
+answer = ask_with_context(
+    query,
+    context
 )
 
-print(results["documents"])
+print("\nCONTEXT:\n")
+print(context)
+
+print("\nANSWER:\n")
+print(answer)
