@@ -1,7 +1,7 @@
-from app.llm.gemini_service import ask_gemini
+from app.ingestion.text_loader import load_text
 
-response = ask_gemini(
-    "Explain what organizational intelligence means in one paragraph."
+text = load_text(
+    "data/raw/customer_feedback.txt"
 )
 
-print(response)
+print(text)
