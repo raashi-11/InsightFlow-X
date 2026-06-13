@@ -1,15 +1,20 @@
 from app.ingestion.text_loader import load_text
 
-from app.agents.research_agent import (
-    analyze_feedback
+from app.agents.trend_agent import (
+    analyze_trends
 )
 
-text = load_text(
-    "data/raw/customer_feedback.txt"
+previous = load_text(
+    "data/raw/january_feedback.txt"
 )
 
-analysis = analyze_feedback(
-    text
+current = load_text(
+    "data/raw/march_feedback.txt"
+)
+
+analysis = analyze_trends(
+    previous,
+    current
 )
 
 print(analysis)
