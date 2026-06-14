@@ -1,41 +1,54 @@
 import os
+
 from dotenv import load_dotenv
-import google.generativeai as genai
+
+from google import genai
+
 
 load_dotenv()
 
-genai.configure(
-    api_key=os.getenv("GOOGLE_API_KEY")
-)
 
-model = genai.GenerativeModel(
-    "gemini-2.5-flash"
-)
+class GeminiService:
+
+    _client = None
+
+    @classmethod
+    def get_client(cls):
+
+        if cls._client is None:
+
+            api_key = os.getenv(
+                "GOOGLE_API_KEY"
+            )
+
+            cls._client = genai.Client(
+                api_key=api_key
+            )
+
+        return cls._client
+
+    @classmethod
+    def generate(
+        cls,
+        prompt: str
+    ):
+
+        client = cls.get_client()
+
+        response = client.models.generate_content(
+
+            model="gemini-2.5-flash",
+
+            contents=prompt
+        )
+
+        return response.text
 
 
-def ask_gemini(prompt: str):
-    response = model.generate_content(prompt)
-    return response.text
-
-def ask_with_context(
-    query,
-    context
+def generate_response(
+    prompt: str
 ):
 
-    prompt = f"""
-You are an organizational intelligence analyst.
-
-Answer ONLY using the provided context.
-
-Context:
-{context}
-
-Question:
-{query}
-"""
-
-    response = model.generate_content(
+    return GeminiService.generate(
         prompt
     )
-
-    return response.text
