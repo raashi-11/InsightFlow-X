@@ -23,3 +23,9 @@ python-dotenv
 scikit-learn
 
 tqdm
+
+openai-whisper
+
+ffmpeg-python
+
+pydub

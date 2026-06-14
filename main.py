@@ -1,32 +1,18 @@
-from app.ingestion.text_loader import load_text
-
-from app.agents.trend_agent import (
-    analyze_trends
+from app.processors.document_processor import (
+    DocumentProcessor
 )
 
-from app.agents.decision_agent import (
-    generate_recommendations
+processor = DocumentProcessor()
+
+result = processor.process(
+    "data/raw/sample.pdf"
 )
 
-previous = load_text(
-    "data/raw/january_feedback.txt"
-)
+print("\nMETADATA\n")
+print(result["metadata"])
 
-current = load_text(
-    "data/raw/march_feedback.txt"
-)
+print("\nNUMBER OF CHUNKS\n")
+print(len(result["chunks"]))
 
-analysis = analyze_trends(
-    previous,
-    current
-)
-
-recommendations = generate_recommendations(
-    analysis
-)
-
-print("\nANALYSIS\n")
-print(analysis)
-
-print("\nRECOMMENDATIONS\n")
-print(recommendations)
+print("\nFIRST CHUNK\n")
+print(result["chunks"][0])

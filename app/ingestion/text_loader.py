@@ -1,9 +1,17 @@
-def load_text(file_path):
+from pathlib import Path
 
-    with open(
-        file_path,
-        "r",
-        encoding="utf-8"
-    ) as file:
 
-        return file.read()
+class TextLoader:
+
+    @staticmethod
+    def load(file_path: str) -> str:
+
+        path = Path(file_path)
+
+        with open(
+            path,
+            "r",
+            encoding="utf-8"
+        ) as file:
+
+            return file.read()
