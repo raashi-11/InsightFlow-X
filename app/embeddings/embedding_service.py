@@ -1,11 +1,35 @@
-from sentence_transformers import SentenceTransformer
-
-model = SentenceTransformer(
-    "all-MiniLM-L6-v2"
+from sentence_transformers import (
+    SentenceTransformer
 )
 
-def generate_embedding(text):
 
-    embedding = model.encode(text)
+class EmbeddingService:
 
-    return embedding.tolist()
+    _model = None
+
+    @classmethod
+    def get_model(cls):
+
+        if cls._model is None:
+
+            cls._model = (
+                SentenceTransformer(
+                    "all-MiniLM-L6-v2"
+                )
+            )
+
+        return cls._model
+
+    @classmethod
+    def generate_embedding(
+        cls,
+        text: str
+    ):
+
+        model = cls.get_model()
+
+        embedding = model.encode(
+            text
+        )
+
+        return embedding.tolist()

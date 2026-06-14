@@ -1,24 +1,38 @@
 from app.embeddings.embedding_service import (
-    generate_embedding
+    EmbeddingService
 )
 
 from app.vectordb.chroma_manager import (
-    search_documents
+    ChromaManager
 )
 
 
-def retrieve_context(query):
+class Retriever:
 
-    query_embedding = generate_embedding(
-        query
-    )
+    def __init__(self):
 
-    results = search_documents(
-        query_embedding
-    )
+        self.db = ChromaManager()
 
-    documents = results["documents"][0]
+    def retrieve(
+        self,
+        query,
+        top_k=5
+    ):
 
-    context = "\n".join(documents)
+        query_embedding = (
 
-    return context
+            EmbeddingService
+            .generate_embedding(
+                query
+            )
+        )
+
+        results = (
+
+            self.db.search(
+                query_embedding,
+                top_k
+            )
+        )
+
+        return results

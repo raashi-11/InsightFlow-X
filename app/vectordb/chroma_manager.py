@@ -1,28 +1,79 @@
 import chromadb
 
-client = chromadb.PersistentClient(
-    path="data/chroma_db"
-)
-
-collection = client.get_or_create_collection(
-    name="organizational_memory"
+from app.embeddings.embedding_service import (
+    EmbeddingService
 )
 
 
-def add_document(doc_id, text, embedding):
+class ChromaManager:
 
-    collection.add(
-        ids=[doc_id],
-        documents=[text],
-        embeddings=[embedding]
-    )
+    def __init__(self):
 
+        self.client = (
+            chromadb.PersistentClient(
+                path="data/chroma_db"
+            )
+        )
 
-def search_documents(query_embedding, n_results=3):
+        self.collection = (
+            self.client
+            .get_or_create_collection(
+                name="organizational_memory"
+            )
+        )
 
-    results = collection.query(
-        query_embeddings=[query_embedding],
-        n_results=n_results
-    )
+    def store_chunks(
+        self,
+        chunks,
+        metadata
+    ):
 
-    return results
+        for idx, chunk in enumerate(chunks):
+
+            embedding = (
+                EmbeddingService
+                .generate_embedding(
+                    chunk
+                )
+            )
+
+            chunk_id = (
+                f"{metadata['filename']}"
+                f"_{idx}"
+            )
+
+            self.collection.add(
+
+                ids=[chunk_id],
+
+                documents=[chunk],
+
+                embeddings=[embedding],
+
+                metadatas=[
+                    {
+                        "filename":
+                        metadata[
+                            "filename"
+                        ],
+
+                        "chunk_id":
+                        idx
+                    }
+                ]
+            )
+
+    def search(
+        self,
+        query_embedding,
+        n_results=5
+    ):
+
+        return self.collection.query(
+
+            query_embeddings=[
+                query_embedding
+            ],
+
+            n_results=n_results
+        )
