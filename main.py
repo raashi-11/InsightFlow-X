@@ -1,56 +1,41 @@
-from app.agents.research_agent import (
-    ResearchAgent
+from app.evaluation.executive_report_generator import (
+    ExecutiveReportGenerator
 )
 
-from app.analytics.theme_counter import (
-    ThemeCounter
-)
+research_results = """
+Top Pain Points:
+- KYC confusion
+- Verification delays
 
-from app.analytics.sentiment_analyzer import (
-    SentimentAnalyzer
-)
-
-
-sample_text = """
-
-Users are confused during KYC verification.
-
-Many users abandon onboarding.
-
-Verification takes more than 48 hours.
-
-Users want onboarding videos.
-
-Customers repeatedly contact support.
-
-The dashboard is appreciated.
-
+Opportunities:
+- Video onboarding
 """
 
-theme_counts = (
+trend_results = """
+Onboarding complaints increased 40%
+Verification complaints increased 25%
+"""
 
-    ThemeCounter.count_themes(
-        sample_text
-    )
+decision_results = """
+Priority 1:
+Improve onboarding flow
+
+Priority 2:
+Reduce verification turnaround time
+"""
+
+risk_score = 7.2
+
+report = ExecutiveReportGenerator.generate(
+
+    research_results,
+
+    trend_results,
+
+    decision_results,
+
+    risk_score
 
 )
 
-sentiment = (
-
-    SentimentAnalyzer.analyze(
-        sample_text
-    )
-
-)
-
-result = ResearchAgent.analyze(
-
-    sample_text,
-
-    theme_counts,
-
-    sentiment
-
-)
-
-print(result)
+print(report)
