@@ -1,27 +1,39 @@
-from app.llm.gemini_service import ask_gemini
+from app.llm.gemini_service import (
+    generate_response
+)
+
+from app.prompts.trend_prompt import (
+    build_trend_prompt
+)
 
 
-def analyze_trends(previous_data, current_data):
+class TrendAgent:
 
-    prompt = f"""
-You are a senior business intelligence analyst.
+    @staticmethod
+    def analyze(
 
-Compare the two datasets.
+        previous_data,
 
-Identify:
+        current_data,
 
-1. Emerging Problems
-2. Improving Areas
-3. New Risks
-4. Strategic Opportunities
+        trend_results
 
-Previous Data:
-{previous_data}
+    ):
 
-Current Data:
-{current_data}
+        prompt = (
 
-Provide an executive summary.
-"""
+            build_trend_prompt(
 
-    return ask_gemini(prompt)
+                previous_data,
+
+                current_data,
+
+                trend_results
+
+            )
+
+        )
+
+        return generate_response(
+            prompt
+        )

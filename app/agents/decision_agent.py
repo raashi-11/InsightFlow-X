@@ -1,24 +1,39 @@
-from app.llm.gemini_service import ask_gemini
+from app.llm.gemini_service import (
+    generate_response
+)
+
+from app.prompts.decision_prompt import (
+    build_decision_prompt
+)
 
 
-def generate_recommendations(analysis):
+class DecisionAgent:
 
-    prompt = f"""
-You are a Chief Product Officer.
+    @staticmethod
+    def analyze(
 
-Based on the analysis below:
+        research_results,
 
-{analysis}
+        trend_results,
 
-Generate:
+        risk_score
 
-1. Top 3 Actions
-2. Expected Business Impact
-3. Priority Level
-4. Effort Level
-5. Success Metrics
+    ):
 
-Format clearly.
-"""
+        prompt = (
 
-    return ask_gemini(prompt)
+            build_decision_prompt(
+
+                research_results,
+
+                trend_results,
+
+                risk_score
+
+            )
+
+        )
+
+        return generate_response(
+            prompt
+        )

@@ -1,5 +1,5 @@
-from app.processors.document_processor import (
-    DocumentProcessor
+from app.agents.research_agent import (
+    ResearchAgent
 )
 
 from app.analytics.theme_counter import (
@@ -10,56 +10,47 @@ from app.analytics.sentiment_analyzer import (
     SentimentAnalyzer
 )
 
-from app.analytics.risk_scorer import (
-    RiskScorer
-)
 
-from app.analytics.ai_theme_extractor import (
-    AIThemeExtractor
-)
+sample_text = """
 
-processor = DocumentProcessor()
+Users are confused during KYC verification.
 
-document = processor.process(
-    "data/raw/customer_feedback.txt"
-)
+Many users abandon onboarding.
 
-text = document["content"]
+Verification takes more than 48 hours.
+
+Users want onboarding videos.
+
+Customers repeatedly contact support.
+
+The dashboard is appreciated.
+
+"""
 
 theme_counts = (
-    ThemeCounter.count_themes(
-        text
-    )
-)
 
-print("\nTHEMES\n")
-print(theme_counts)
+    ThemeCounter.count_themes(
+        sample_text
+    )
+
+)
 
 sentiment = (
+
     SentimentAnalyzer.analyze(
-        text
-    )
-)
-
-print("\nSENTIMENT\n")
-print(sentiment)
-
-risk_score = (
-    RiskScorer.calculate(
-        sentiment,
-        theme_counts
-    )
-)
-
-print("\nRISK SCORE\n")
-print(risk_score)
-
-print("\nAI THEMES\n")
-
-print(
-
-    AIThemeExtractor.extract(
-        text
+        sample_text
     )
 
 )
+
+result = ResearchAgent.analyze(
+
+    sample_text,
+
+    theme_counts,
+
+    sentiment
+
+)
+
+print(result)

@@ -1,25 +1,39 @@
 from app.llm.gemini_service import (
-    ask_gemini
+    generate_response
+)
+
+from app.prompts.research_prompt import (
+    build_research_prompt
 )
 
 
-def analyze_feedback(context):
+class ResearchAgent:
 
-    prompt = f"""
-You are a senior research analyst.
+    @staticmethod
+    def analyze(
 
-Analyze the feedback and identify:
+        context,
 
-1. Top Pain Points
-2. Feature Requests
-3. Positive Feedback
-4. Risks
-5. Opportunities
+        theme_counts,
 
-Feedback:
-{context}
+        sentiment
 
-Return results in clear bullet points.
-"""
+    ):
 
-    return ask_gemini(prompt)
+        prompt = (
+
+            build_research_prompt(
+
+                context,
+
+                theme_counts,
+
+                sentiment
+
+            )
+
+        )
+
+        return generate_response(
+            prompt
+        )
