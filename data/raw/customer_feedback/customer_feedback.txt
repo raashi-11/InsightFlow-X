@@ -1,19 +1,9 @@
-Users are confused during KYC verification.
+Customer Feedback Consolidated Summary
 
-Many users abandon onboarding before completing registration.
+Over the last quarter, customers consistently reported difficulties during the onboarding and account verification process. The most common concerns included delayed verification timelines, repeated document upload requests, and lack of clarity regarding compliance requirements.
 
-The onboarding process has too many steps.
+New investors often expressed uncertainty when selecting investment products and requested educational content that explained mutual funds, SIPs, risk categories, and tax implications in simple language.
 
-Users want video guidance during account setup.
+Positive feedback was concentrated around the investment dashboard, portfolio tracking capabilities, SIP recommendations, and performance analytics. Many users highlighted that once onboarding was completed, the overall investing experience was intuitive and valuable.
 
-Verification sometimes takes more than 48 hours.
-
-Customers are frustrated by repeated document uploads.
-
-Many users appreciate the investment dashboard.
-
-The SIP setup flow is difficult for first-time investors.
-
-Users frequently contact support regarding onboarding issues.
-
-Customers request simpler explanations of financial terms.
+Recommendations from customer feedback include reducing onboarding complexity, improving verification transparency, providing onboarding guidance videos, and expanding educational resources for beginner investors.

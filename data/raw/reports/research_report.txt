@@ -1,0 +1,3 @@
+User Research Findings
+
+Interviews with new investors revealed three primary concerns: verification complexity, lack of investment education, and uncertainty regarding compliance requirements. Users who successfully completed onboarding reported high satisfaction with portfolio insights, SIP recommendations, and goal-tracking capabilities. Researchers recommend simplifying onboarding and increasing contextual educational support.

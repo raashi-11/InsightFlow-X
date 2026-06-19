@@ -1,0 +1,3 @@
+Leadership discussed increasing onboarding abandonment rates. Analysis indicates that KYC confusion and lengthy verification timelines are primary contributors. The team proposed introducing guided onboarding videos, improving document upload workflows, and adding verification progress tracking.
+
+Dashboard engagement metrics remain strong, suggesting that product value is recognized once users complete onboarding.

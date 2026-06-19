@@ -1,4 +1,11 @@
-id,feedback
-1,KYC process is confusing
-2,Verification takes too long
-3,Dashboard is excellent
+ticket_id,issue
+1001,KYC verification failed
+1002,Unable to upload Aadhaar document
+1003,Verification status not updating
+1004,Confused about onboarding steps
+1005,Document rejected without explanation
+1006,Unable to complete registration
+1007,Need assistance with SIP setup
+1008,Support response delayed
+1009,Repeated document upload requests
+1010,Unable to link bank account

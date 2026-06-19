@@ -1,0 +1,1 @@
+The product team reviewed onboarding funnel metrics and identified verification delays as the primary contributor to user drop-off. Proposed initiatives include automated document validation, onboarding progress tracking, and AI-assisted customer guidance. Dashboard engagement remains consistently high.
