@@ -9,39 +9,43 @@ class RiskScorer:
 
     ):
 
-        score = 0
+        issue_count = sum(
+            theme_counts.values()
+        )
 
-        negative_weight = 0
+        issue_risk = min(
+            issue_count / 20,
+            5
+        )
+
+        sentiment_risk = 0
 
         if sentiment["label"] == "NEGATIVE":
 
-            negative_weight = (
+            sentiment_risk = (
 
                 sentiment["score"]
-                * 5
+
+                * 3
 
             )
 
-        issue_count = sum(
+        elif sentiment["label"] == "POSITIVE":
 
-            theme_counts.values()
+            sentiment_risk = 1
 
-        )
+        total_score = (
 
-        score = (
+            issue_risk
 
-            negative_weight
+            + sentiment_risk
 
-            + issue_count / 10
-
-        )
-
-        score = min(
-            score,
-            10
         )
 
         return round(
-            score,
+
+            min(total_score, 10),
+
             2
+
         )

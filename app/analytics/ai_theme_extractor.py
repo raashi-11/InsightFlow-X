@@ -1,36 +1,75 @@
-from app.llm.gemini_service import (
-    generate_response
-)
-
-
 class AIThemeExtractor:
 
     @staticmethod
     def extract(
-        text: str
+        text
     ):
 
-        prompt = f"""
+        themes = {
 
-You are a senior business intelligence analyst.
+            "Onboarding":
+            text.lower().count(
+                "onboarding"
+            ),
 
-Analyze the following organizational data.
+            "Verification":
+            text.lower().count(
+                "verification"
+            ),
 
-Identify:
+            "KYC":
+            text.lower().count(
+                "kyc"
+            ),
 
-1. Major Themes
-2. Emerging Concerns
-3. Positive Signals
-4. Strategic Opportunities
+            "Support":
+            text.lower().count(
+                "support"
+            ),
 
-Return results in structured bullet points.
+            "Investment":
+            text.lower().count(
+                "investment"
+            ),
 
-DATA:
+            "Dashboard":
+            text.lower().count(
+                "dashboard"
+            ),
 
-{text[:12000]}
+            "Education":
+            text.lower().count(
+                "education"
+            ),
 
-"""
+            "Compliance":
+            text.lower().count(
+                "compliance"
+            )
+        }
 
-        return generate_response(
-            prompt
+        sorted_themes = sorted(
+
+            themes.items(),
+
+            key=lambda x: x[1],
+
+            reverse=True
+
+        )
+
+        summary = []
+
+        for theme, count in sorted_themes:
+
+            if count > 0:
+
+                summary.append(
+
+                    f"{theme}: {count} mentions"
+
+                )
+
+        return "\n".join(
+            summary
         )

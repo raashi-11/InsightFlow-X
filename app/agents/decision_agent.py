@@ -1,12 +1,3 @@
-from app.llm.gemini_service import (
-    generate_response
-)
-
-from app.prompts.decision_prompt import (
-    build_decision_prompt
-)
-
-
 class DecisionAgent:
 
     @staticmethod
@@ -20,20 +11,62 @@ class DecisionAgent:
 
     ):
 
-        prompt = (
+        recommendations = []
 
-            build_decision_prompt(
+        if risk_score >= 8:
 
-                research_results,
+            recommendations.append(
 
-                trend_results,
-
-                risk_score
+                "Urgently address onboarding and verification bottlenecks."
 
             )
 
+            recommendations.append(
+
+                "Allocate additional customer support resources."
+
+            )
+
+        elif risk_score >= 5:
+
+            recommendations.append(
+
+                "Improve onboarding experience and customer education."
+
+            )
+
+            recommendations.append(
+
+                "Monitor verification delays closely."
+
+            )
+
+        else:
+
+            recommendations.append(
+
+                "Maintain current operational strategy."
+
+            )
+
+            recommendations.append(
+
+                "Focus on product enhancement and customer retention."
+
+            )
+
+        recommendations.append(
+
+            "Continue investing in dashboard and portfolio analytics capabilities."
+
         )
 
-        return generate_response(
-            prompt
+        recommendations.append(
+
+            "Expand educational content for first-time investors."
+
+        )
+
+        return "\n".join(
+            recommendations
         )

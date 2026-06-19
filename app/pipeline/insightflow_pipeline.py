@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from app.processors.document_processor import (
     DocumentProcessor
 )
@@ -26,6 +28,10 @@ from app.agents.research_agent import (
     ResearchAgent
 )
 
+from app.agents.decision_agent import (
+    DecisionAgent
+)
+
 from app.evaluation.executive_report_generator import (
     ExecutiveReportGenerator
 )
@@ -43,95 +49,190 @@ class InsightFlowPipeline:
             OrganizationalMemory()
         )
 
-    def run(
+    def run_folder(
         self,
-        file_path
+        folder_path
     ):
 
-        print(
-            "\n[1] Processing document..."
-        )
+        all_text = ""
 
-        document = (
-            self.processor.process(
-                file_path
-            )
-        )
+        processed_files = 0
 
-        print(
-            "[2] Storing in organizational memory..."
-        )
+        supported_extensions = [
 
-        self.memory.ingest_document(
-            document
-        )
-
-        text = document[
-            "content"
+            ".txt",
+            ".csv",
+            ".pdf",
+            ".mp3",
+            ".wav",
+            ".m4a"
         ]
 
+        folder = Path(
+            folder_path
+        )
+
+        for file_path in folder.rglob("*"):
+
+            if (
+
+                file_path.is_file()
+
+                and
+
+                file_path.suffix.lower()
+
+                in supported_extensions
+
+            ):
+
+                try:
+
+                    print(
+                        f"Processing: {file_path.name}"
+                    )
+
+                    document = (
+
+                        self.processor.process(
+                            str(file_path)
+                        )
+                    )
+
+                    self.memory.ingest_document(
+                        document
+                    )
+
+                    all_text += (
+
+                        "\n\n"
+
+                        + document[
+                            "content"
+                        ]
+                    )
+
+                    processed_files += 1
+
+                except Exception as e:
+
+                    print(
+                        f"Error processing {file_path.name}: {e}"
+                    )
+
         print(
-            "[3] Running analytics..."
+            f"\nProcessed {processed_files} files"
+        )
+
+        print(
+            "\nRunning analytics..."
         )
 
         theme_counts = (
+
             ThemeCounter.count_themes(
-                text
+                all_text
             )
         )
 
         sentiment = (
+
             SentimentAnalyzer.analyze(
-                text
+                all_text[:5000]
             )
         )
 
         risk_score = (
+
             RiskScorer.calculate(
+
                 sentiment,
+
                 theme_counts
+
             )
+        )
+
+        #
+        # IMPORTANT
+        # Limit text sent to Gemini
+        # so organization-wide analysis scales.
+        #
+
+        organizational_summary = (
+
+            all_text[:10000]
+
+        )
+
+        print(
+            "\nRunning AI theme extraction..."
         )
 
         ai_themes = (
+
             AIThemeExtractor.extract(
-                text
+                organizational_summary
             )
         )
 
         print(
-            "[4] Running research agent..."
+            "\nRunning research agent..."
         )
 
         research_results = (
+
             ResearchAgent.analyze(
-                text,
+
+                organizational_summary,
+
                 theme_counts,
+
                 sentiment
+
             )
         )
 
         print(
-            "[5] Generating executive report..."
+            "\nRunning decision agent..."
+        )
+
+        decision_results = (
+
+            DecisionAgent.analyze(
+
+                research_results,
+
+                ai_themes,
+
+                risk_score
+
+            )
+        )
+
+        print(
+            "\nGenerating executive report..."
         )
 
         report = (
+
             ExecutiveReportGenerator.generate(
 
                 research_results,
 
                 ai_themes,
 
-                "Decision Agent Placeholder",
+                decision_results,
 
                 risk_score
+
             )
         )
 
         return {
 
-            "metadata":
-            document["metadata"],
+            "processed_files":
+            processed_files,
 
             "theme_counts":
             theme_counts,
@@ -142,8 +243,14 @@ class InsightFlowPipeline:
             "risk_score":
             risk_score,
 
+            "ai_themes":
+            ai_themes,
+
             "research_results":
             research_results,
+
+            "decision_results":
+            decision_results,
 
             "report":
             report
